@@ -4,14 +4,9 @@ import subprocess
 
 class PylintErrorGenerator:
 	errorLineMsg = {}
-	def generateErrorLines(self, doc):
+	def generateErrorLines(self, filepath):
 		"""generate error lines
 		"""
-		#print "uri: " + doc.get_uri()
-		filepath = doc.get_uri_for_display()
-		#print "get_uri_for_display: " + filepath
-		#filename = doc.get_short_name_for_display()
-		#print "short_name_for_display: " + filename
 		#for pylint
 		ps_pylint = subprocess.Popen(["pylint", "-E", filepath],
 					stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -24,22 +19,16 @@ class PylintErrorGenerator:
 					if not self.errorLineMsg.has_key(errorLine):
 						self.errorLineMsg[errorLine] = line[matchObj.end():].strip()
 						yield errorLine
-					continue
 		finally:
 			ps_pylint.stdout.close()
 			ps_pylint.stderr.close()
 
 class PyflakesErrorGenerator:
 	errorLineMsg = {}
-	def generateErrorLines(self, doc):
+	def generateErrorLines(self, filepath):
 		"""generate error lines
 		"""
-		#print "uri: " + doc.get_uri()
-		filepath = doc.get_uri_for_display()
-		#print "get_uri_for_display: " + filepath
-		#filename = doc.get_short_name_for_display()
-		#print "short_name_for_display: " + filename
-		#for pylint
+		#for pyflakes
 		ps_pylint = subprocess.Popen(["pyflakes", filepath],
 					stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 		self.errorLineMsg.clear()
@@ -52,7 +41,6 @@ class PyflakesErrorGenerator:
 					if not self.errorLineMsg.has_key(errorLine):
 						self.errorLineMsg[errorLine] = matchObj.group(2).strip()
 						yield errorLine
-					continue
 		finally:
 			ps_pylint.stdout.close()
 			ps_pylint.stderr.close()

@@ -4,27 +4,21 @@ import subprocess
 
 class PhpErrorGenerator:
 	errorLineMsg = {}
-	def generateErrorLines(self, doc):
+	def generateErrorLines(self, filepath):
 		"""generate error lines
 		"""
-		#print "uri: " + doc.get_uri()
-		filepath = doc.get_uri_for_display()
-		#print "get_uri_for_display: " + filepath
-		filename = doc.get_short_name_for_display()
-		#print "short_name_for_display: " + filename
-		#for pychecker
+		#for php -l
 		ps_pych = subprocess.Popen(["php", "-l", filepath],
 					#stdout=subprocess.PIPE,
 					stderr=subprocess.PIPE)
 		self.errorLineMsg.clear()
 		try:
 			for line in ps_pych.stderr:
-				matchObj = re.search("line [0-9]+$", line)
+				matchObj = re.search(".*:  (.*) on line ([0-9]+)$", line)
 				if not matchObj is None:
-					errorLine = int(matchObj.group(0)[5:])
+					errorLine = int(matchObj.group(2))
 					if not self.errorLineMsg.has_key(errorLine):
-						self.errorLineMsg[errorLine] = line.replace(filepath, filename).strip()
+						self.errorLineMsg[errorLine] = matchObj.group(1).strip()
 						yield errorLine
-					continue
 		finally:
 			ps_pych.stderr.close()

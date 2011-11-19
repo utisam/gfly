@@ -23,7 +23,7 @@ errorGenerator = {
 	"C++": [CppErrorGenerator()],
 	"C/C++/ObjC Header": [CppErrorGenerator()],
 	"Java": [JavaErrorGenerator()],
-	"Python": [PyflakesErrorGenerator()],
+	"Python": [PyflakesErrorGenerator()],#[PylintErrorGenerator()],
 	"C#": [CsharpErrorGenerator()],
 	"Perl": [PerlErrorGenerator()],
 	"PHP": [PhpErrorGenerator()],
@@ -102,7 +102,7 @@ class TabWatch:
 			doc.remove_tag(self.errorTag, s, e)
 			for g in errorGenerator[lang]:
 				try:
-					for i in g.generateErrorLines(doc):
+					for i in g.generateErrorLines(doc.get_uri_for_display()):
 						s, e = getLineStartToEnd(doc, i - 1)
 						doc.apply_tag(self.errorTag, s, e)
 				except Error:
