@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 import sys
 import unittest
 import os
 
+# LANG=ja_JP.UTF-8
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append('../gfly')
 
@@ -32,7 +32,6 @@ def TestJavaErrorGenerator():
 	lines = [x for x in gen.generateErrorLines('MockSrc.java')]
 	assert len(lines) == 1
 	assert lines[0] == 3
-	# LANG=ja_JP.UTF-8 javac
 	assert(gen.errorLineMsg[lines[0]]) == "';' がありません。"
 
 
@@ -42,7 +41,6 @@ def TestClosureLinterErrorGenerator():
 	lines = [x for x in gen.generateErrorLines('mocksrc.js')]
 	assert len(lines) == 1
 	assert lines[0] == 1
-	# LANG=ja_JP.UTF-8 javac
 	assert(gen.errorLineMsg[lines[0]]) == "(New error) Missing semicolon at end of line"
 
 
@@ -106,4 +104,13 @@ def TestShErrorGenerator():
 	assert len(lines) == 1
 	assert lines[0] == 4
 	assert gen.errorLineMsg[lines[0]] == 'Syntax error: "fi" unexpected (expecting "then")'
+
+
+def TestBashErrorGenerator():
+	from ShErrorGenerator import BashErrorGenerator
+	gen = BashErrorGenerator()
+	lines = [x for x in gen.generateErrorLines('mocksrc.sh')]
+	assert len(lines) == 1
+	assert lines[0] == 4
+	assert gen.errorLineMsg[lines[0]] == "期待してない token `fi' のあたりにシンタックスエラー"
 

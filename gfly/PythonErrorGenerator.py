@@ -1,46 +1,21 @@
 #-*- coding:utf-8 -*-
-import re
 import subprocess
+from ErrorGenerator import ErrorGenerator
 
-class PylintErrorGenerator:
-	errorLineMsg = {}
-	def generateErrorLines(self, filepath):
-		"""generate error lines
-		"""
-		#for pylint
-		ps_pylint = subprocess.Popen(["pylint", "-E", filepath],
-					stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-		self.errorLineMsg.clear()
-		try:
-			for line in ps_pylint.stdout:
-				matchObj = re.search("^E: *[0-9]*: ", line)
-				if not matchObj is None:
-					errorLine = int(matchObj.group(0)[2:-2])
-					if not self.errorLineMsg.has_key(errorLine):
-						self.errorLineMsg[errorLine] = line[matchObj.end():].strip()
-						yield errorLine
-		finally:
-			ps_pylint.stdout.close()
-			ps_pylint.stderr.close()
+class PylintErrorGenerator(ErrorGenerator):
+	command = ["pylint", "-E"]
+	startFilePath = False
+	parseRegex = "^E: *([0-9]*): (.*)"
+	lineIndex = 1
+	messageIndex = 2
+	stdout = subprocess.PIPE
+	stderr = None
 
-class PyflakesErrorGenerator:
-	errorLineMsg = {}
-	def generateErrorLines(self, filepath):
-		"""generate error lines
-		"""
-		#for pyflakes
-		ps_pylint = subprocess.Popen(["pyflakes", filepath],
-					stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-		self.errorLineMsg.clear()
-		try:
-			for line in ps_pylint.stderr:
-				matchObj = re.search("^:([0-9]*): (.*)", line[len(filepath):])
-				if not matchObj is None:
-					errorLine = int(matchObj.group(1))
-					print errorLine
-					if not self.errorLineMsg.has_key(errorLine):
-						self.errorLineMsg[errorLine] = matchObj.group(2).strip()
-						yield errorLine
-		finally:
-			ps_pylint.stdout.close()
-			ps_pylint.stderr.close()
+class PyflakesErrorGenerator(ErrorGenerator):
+	command = ["pyflakes"]
+	startFilePath = True
+	parseRegex = "^:([0-9]*): (.*)"
+	lineIndex = 1
+	messageIndex = 2
+	stdout = None
+	stderr = subprocess.PIPE

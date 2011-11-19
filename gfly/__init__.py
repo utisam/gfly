@@ -34,6 +34,9 @@ errorGenerator = {
 	"sh": [ShErrorGenerator()],
 }
 
+# key binding
+jump_to_error_key = "<Control>1"
+
 ui_str = """<ui>
 	<menubar name="MenuBar">
 		<menu name="EditMenu" action="Edit">
@@ -54,6 +57,10 @@ def getLineStartToEnd(doc, line):
 	e = s.copy()
 	e.forward_line()
 	return s, e
+def skipWhiteSpaces(itr):
+	while not itr.starts_word() and itr.forward_char():
+		pass
+	return itr
 def getLanguageName(doc):
 	""" get document's languageName
 	Attribute:
@@ -108,7 +115,7 @@ class TabWatch:
 				try:
 					for i in g.generateErrorLines(doc.get_uri_for_display()):
 						s, e = getLineStartToEnd(doc, i - 1)
-						doc.apply_tag(self.errorTag, s, e)
+						doc.apply_tag(self.errorTag, skipWhiteSpaces(s), e)
 				except Error:
 					print "cannot generateErrorLines"
 	def __move_cursor(self, textview, *args):
@@ -150,7 +157,7 @@ class gfly(gedit.Plugin):
 		self.tabwatch = TabWatch(window)
 		manager = window.get_ui_manager()
 		self.action_group = gtk.ActionGroup("gflyPluginAction")
-		self.action_group.add_actions([("gfly", None, "Jump Error", "<Control>1", None, self.__jump_error)])
+		self.action_group.add_actions([("gfly", None, "Jump Error", jump_to_error_key, None, self.__jump_error)])
 		manager.insert_action_group(self.action_group, -1)
 		self.ui_id = manager.add_ui_from_string(ui_str)
 	def deactivate(self, window):

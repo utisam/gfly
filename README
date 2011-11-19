@@ -86,6 +86,7 @@ gedit用flymake的な何か「gfly」
 		Twitter: @utisam
 
 	変更履歴(Change Log)
+		bashに対応
 		gjslintに対応
 		pyflakes, rubyに対応
 		pycheckerからpylintに変更
