@@ -47,8 +47,10 @@ gedit用flymake的な何か「gfly」
 		Javaでの利用にはjavacが必要です
 		you need "javac" for Java
 		
-		Pythonでの利用にはpylintが必要です
-		you need "pylint" for Python
+		Pythonでの利用にはpyflakesもしくはpylintが必要です
+		you need "pyflakes" or "pylint" for Python
+		デフォルトではpyflakesを利用します
+		default is "pyflakes"
 		
 		C#での利用にはgmcsが必要です
 		you need "gmcs" for C#
