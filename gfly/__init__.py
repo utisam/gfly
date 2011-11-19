@@ -12,6 +12,7 @@ from PythonErrorGenerator import PyflakesErrorGenerator
 from CsharpErrorGenerator import CsharpErrorGenerator
 from PerlErrorGenerator import PerlErrorGenerator
 from PhpErrorGenerator import PhpErrorGenerator
+from RubyErrorGenerator import RubyErrorGenerator
 from ShErrorGenerator import ShErrorGenerator
 """ when you want to add error generator, use under map, and add instance.
 ErrorGenerator needs "errorLineMsg(Map)" and "def generateErrorLines(self, doc):"
@@ -22,11 +23,12 @@ errorGenerator = {
 	"C": [CErrorGenerator()],
 	"C++": [CppErrorGenerator()],
 	"C/C++/ObjC Header": [CppErrorGenerator()],
+	"C#": [CsharpErrorGenerator()],
 	"Java": [JavaErrorGenerator()],
 	"Python": [PyflakesErrorGenerator()],#[PylintErrorGenerator()],
-	"C#": [CsharpErrorGenerator()],
 	"Perl": [PerlErrorGenerator()],
 	"PHP": [PhpErrorGenerator()],
+	"Ruby": [RubyErrorGenerator()],
 	"sh": [ShErrorGenerator()],
 }
 

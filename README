@@ -60,7 +60,10 @@ gedit用flymake的な何か「gfly」
 		
 		PHPでの利用にはphpが必要です
 		you need "php" for PHP
-	
+		
+		Rubyでの利用にはrubyが必要です
+		you need "ruby" for Ruby
+		
 	キーバインディングを変更したい(You want to change key binding)
 		__init__.pyを編集
 		edit __init__.py
@@ -80,6 +83,7 @@ gedit用flymake的な何か「gfly」
 		Twitter: @utisam
 
 	変更履歴(Change Log)
+		pyflakes, rubyに対応
 		pycheckerからpylintに変更
 		perlとPHPを追加
 		C++とJavaとPython

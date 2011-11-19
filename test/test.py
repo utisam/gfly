@@ -81,6 +81,14 @@ def TestPhpErrorGenerator():
 	assert gen.errorLineMsg[lines[0]] == "syntax error, unexpected T_ENCAPSED_AND_WHITESPACE in mocksrc.php"
 
 
+def TestRubyErrorGenerator():
+	from RubyErrorGenerator import RubyErrorGenerator
+	gen = RubyErrorGenerator()
+	lines = [x for x in gen.generateErrorLines('mocksrc.rb')]
+	assert len(lines) == 1
+	assert lines[0] == 1
+	assert gen.errorLineMsg[lines[0]] == "unterminated string meets end of file"
+
 def TestShErrorGenerator():
 	from ShErrorGenerator import ShErrorGenerator
 	gen = ShErrorGenerator()
