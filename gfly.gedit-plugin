@@ -1,0 +1,11 @@
+[Gedit Plugin]
+Loader=python
+Module=gfly
+IAge=2
+Name=gfly
+Name[ja]=gfly
+Description=something like flymake for gedit
+Description[ja]=flymake的な何か
+Authors=Tsushima Masatoshi <utisam@gmail.com>
+Copyright=Copyright © 2011- Masatoshi Tsushima <utisam@gmail.com>
+Website=http://twitter.com/#!/utisam
