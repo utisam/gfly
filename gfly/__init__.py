@@ -7,6 +7,7 @@ import gedit
 from CErrorGenerator import CErrorGenerator
 from CppErrorGenerator import CppErrorGenerator
 from JavaErrorGenerator import JavaErrorGenerator
+from JavascriptErrorGenerator import ClosureLinterErrorGenerator
 #from PythonErrorGenerator import PylintErrorGenerator
 from PythonErrorGenerator import PyflakesErrorGenerator
 from CsharpErrorGenerator import CsharpErrorGenerator
@@ -25,6 +26,7 @@ errorGenerator = {
 	"C/C++/ObjC Header": [CppErrorGenerator()],
 	"C#": [CsharpErrorGenerator()],
 	"Java": [JavaErrorGenerator()],
+	"Javascript": [ClosureLinterErrorGenerator()],
 	"Python": [PyflakesErrorGenerator()],#[PylintErrorGenerator()],
 	"Perl": [PerlErrorGenerator()],
 	"PHP": [PhpErrorGenerator()],

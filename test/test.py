@@ -36,6 +36,16 @@ def TestJavaErrorGenerator():
 	assert(gen.errorLineMsg[lines[0]]) == "';' がありません。"
 
 
+def TestClosureLinterErrorGenerator():
+	from JavascriptErrorGenerator import ClosureLinterErrorGenerator
+	gen = ClosureLinterErrorGenerator()
+	lines = [x for x in gen.generateErrorLines('mocksrc.js')]
+	assert len(lines) == 1
+	assert lines[0] == 1
+	# LANG=ja_JP.UTF-8 javac
+	assert(gen.errorLineMsg[lines[0]]) == "(New error) Missing semicolon at end of line"
+
+
 def TestPylintErrorGenerator():
 	from PythonErrorGenerator import PylintErrorGenerator
 	gen = PylintErrorGenerator()
