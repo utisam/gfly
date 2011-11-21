@@ -1,7 +1,8 @@
 gedit用flymake的な何か「gfly」
 	-- something like flymake for gedit "gfly" --
-	ver 1.1
-	
+
+![Screenshot](http://cloud.github.com/downloads/utisam/gfly/Screenshot.png)
+
 	使い方(How to use)
 		gfl.gedit-pluginとgflyフォルダを~/.gnome2/gedit/pluginsにコピー
 		copy "gfly.gedit-plugin" and "gfly/" to ~/gnome2/gedit/plugins
