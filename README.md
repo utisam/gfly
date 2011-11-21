@@ -1,7 +1,7 @@
 gedit用flymake的な何か「gfly」
 	-- something like flymake for gedit "gfly" --
 
-![Screenshot](Screenshot.png)
+![Screenshot](gfly/blob/master/Screenshot.png)
 
 	使い方(How to use)
 		gfl.gedit-pluginとgflyフォルダを~/.gnome2/gedit/pluginsにコピー
