@@ -68,6 +68,9 @@ gedit用flymake的な何か「gfly」
 		Rubyでの利用にはrubyが必要です
 		you need "ruby" for Ruby
 		
+		LaTeXでの利用にはlacheckが必要です
+		you need "lacheck" for LaTeX
+		
 	キーバインディングを変更したい(You want to change key binding)
 		__init__.pyを編集
 		edit __init__.py

@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 import sys
 import unittest
 import os
@@ -7,6 +8,7 @@ import os
 # LANG=ja_JP.UTF-8
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append('../gfly')
+
 
 def TestCErrorGenerator():
 	from CErrorGenerator import CErrorGenerator
@@ -23,42 +25,8 @@ def TestCppErrorGenerator():
 	lines = [x for x in gen.generateErrorLines('mocksrc.cpp')]
 	assert len(lines) == 1
 	assert lines[0] == 4
-	assert(gen.errorLineMsg[lines[0]]) == "error: ‘cout’ was not declared in this scope"
+	assert gen.errorLineMsg[lines[0]] == "error: ‘cout’ was not declared in this scope"
 
-
-def TestJavaErrorGenerator():
-	from JavaErrorGenerator import JavaErrorGenerator
-	gen = JavaErrorGenerator()
-	lines = [x for x in gen.generateErrorLines('MockSrc.java')]
-	assert len(lines) == 1
-	assert lines[0] == 3
-	assert(gen.errorLineMsg[lines[0]]) == "';' がありません。"
-
-
-def TestClosureLinterErrorGenerator():
-	from JavascriptErrorGenerator import ClosureLinterErrorGenerator
-	gen = ClosureLinterErrorGenerator()
-	lines = [x for x in gen.generateErrorLines('mocksrc.js')]
-	assert len(lines) == 1
-	assert lines[0] == 1
-	assert(gen.errorLineMsg[lines[0]]) == "(New error) Missing semicolon at end of line"
-
-
-def TestPylintErrorGenerator():
-	from PythonErrorGenerator import PylintErrorGenerator
-	gen = PylintErrorGenerator()
-	lines = [x for x in gen.generateErrorLines('mocksrc.py')]
-	assert len(lines) == 1
-	assert lines[0] == 8
-	assert gen.errorLineMsg[lines[0]] == "invalid syntax"
-
-def TestPyflakesErrorGenerator():
-	from PythonErrorGenerator import PyflakesErrorGenerator
-	gen = PyflakesErrorGenerator()
-	lines = [x for x in gen.generateErrorLines('mocksrc.py')]
-	assert len(lines) == 1
-	assert lines[0] == 8
-	assert gen.errorLineMsg[lines[0]] == "invalid syntax"
 
 def TestCsharpErrorGenerator():
 	from CsharpErrorGenerator import CsharpErrorGenerator
@@ -68,7 +36,43 @@ def TestCsharpErrorGenerator():
 	assert lines[0] == 6
 	assert gen.errorLineMsg[lines[0]] == "error CS1525: Unexpected symbol `}'"
 	assert lines[1] == 8
-	assert gen.errorLineMsg[lines[1]] == "error CS8025: Parsing error"
+	assert gen.errorLineMsg[lines[1]] == 'error CS8025: Parsing error'
+
+
+def TestJavaErrorGenerator():
+	from JavaErrorGenerator import JavaErrorGenerator
+	gen = JavaErrorGenerator()
+	lines = [x for x in gen.generateErrorLines('MockSrc.java')]
+	assert len(lines) == 1
+	assert lines[0] == 3
+	assert gen.errorLineMsg[lines[0]] == "';' がありません。"
+
+
+def TestClosureLinterErrorGenerator():
+	from JavascriptErrorGenerator import ClosureLinterErrorGenerator
+	gen = ClosureLinterErrorGenerator()
+	lines = [x for x in gen.generateErrorLines('mocksrc.js')]
+	assert len(lines) == 1
+	assert lines[0] == 1
+	assert gen.errorLineMsg[lines[0]] == '(New error) Missing semicolon at end of line'
+
+
+def TestPylintErrorGenerator():
+	from PythonErrorGenerator import PylintErrorGenerator
+	gen = PylintErrorGenerator()
+	lines = [x for x in gen.generateErrorLines('mocksrc.py')]
+	assert len(lines) == 1
+	assert lines[0] == 8
+	assert gen.errorLineMsg[lines[0]] == 'invalid syntax'
+
+
+def TestPyflakesErrorGenerator():
+	from PythonErrorGenerator import PyflakesErrorGenerator
+	gen = PyflakesErrorGenerator()
+	lines = [x for x in gen.generateErrorLines('mocksrc.py')]
+	assert len(lines) == 1
+	assert lines[0] == 8
+	assert gen.errorLineMsg[lines[0]] == 'invalid syntax'
 
 
 def TestPerlErrorGenerator():
@@ -77,7 +81,7 @@ def TestPerlErrorGenerator():
 	lines = [x for x in gen.generateErrorLines('mocksrc.pl')]
 	assert len(lines) == 1
 	assert lines[0] == 1
-	assert gen.errorLineMsg[lines[0]] == "Can't find string terminator '\"' anywhere before EOF at mocksrc.pl"
+	assert gen.errorLineMsg[lines[0]] == 'Can\'t find string terminator \'"\' anywhere before EOF at mocksrc.pl'
 
 
 def TestPhpErrorGenerator():
@@ -86,7 +90,7 @@ def TestPhpErrorGenerator():
 	lines = [x for x in gen.generateErrorLines('mocksrc.php')]
 	assert len(lines) == 1
 	assert lines[0] == 2
-	assert gen.errorLineMsg[lines[0]] == "syntax error, unexpected T_ENCAPSED_AND_WHITESPACE in mocksrc.php"
+	assert gen.errorLineMsg[lines[0]] == 'syntax error, unexpected T_ENCAPSED_AND_WHITESPACE in mocksrc.php'
 
 
 def TestRubyErrorGenerator():
@@ -95,7 +99,8 @@ def TestRubyErrorGenerator():
 	lines = [x for x in gen.generateErrorLines('mocksrc.rb')]
 	assert len(lines) == 1
 	assert lines[0] == 1
-	assert gen.errorLineMsg[lines[0]] == "unterminated string meets end of file"
+	assert gen.errorLineMsg[lines[0]] == 'unterminated string meets end of file'
+
 
 def TestShErrorGenerator():
 	from ShErrorGenerator import ShErrorGenerator
@@ -113,4 +118,14 @@ def TestBashErrorGenerator():
 	assert len(lines) == 1
 	assert lines[0] == 4
 	assert gen.errorLineMsg[lines[0]] == "期待してない token `fi' のあたりにシンタックスエラー"
+
+def TestLatexErrorGenerator():
+	from LatexErrorGenerator import LatexErrorGenerator
+	gen = LatexErrorGenerator()
+	lines = [x for x in gen.generateErrorLines('mocksrc.tex')]
+	assert len(lines) == 2
+	assert lines[0] == 4
+	assert gen.errorLineMsg[lines[0]] == 'possible unwanted space at "{"'
+	assert lines[1] == 14
+	assert gen.errorLineMsg[lines[1]] == '{argument} missing for \\begin'
 
