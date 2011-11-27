@@ -39,6 +39,9 @@ errorGenerator = {
 # key binding
 jump_to_error_key = "<Control>1"
 
+# notification
+notification = True
+
 ui_str = """<ui>
 	<menubar name="MenuBar">
 		<menu name="EditMenu" action="Edit">
@@ -108,18 +111,36 @@ class TabWatch:
 	def __doc_saved(self, doc, *args):
 		self.draw_lines(doc)
 	def draw_lines(self, doc):
+		# clear
+		s, e = doc.get_bounds()
+		doc.remove_tag(self.errorTag, s, e)
+		#generate error and apply new error tag
 		lang = getLanguageName(doc)
 		if errorGenerator.has_key(lang):
-			#generate error and apply new error tag
-			s, e = doc.get_bounds()
-			doc.remove_tag(self.errorTag, s, e)
+			errorCount = 0
 			for g in errorGenerator[lang]:
 				try:
 					for i in g.generateErrorLines(doc.get_uri_for_display()):
 						s, e = getLineStartToEnd(doc, i - 1)
 						doc.apply_tag(self.errorTag, skipWhiteSpaces(s), e)
+						errorCount += 1
 				except Error:
 					print "cannot generateErrorLines"
+			if notification:
+				self.errorNorify(errorCount)
+	def errorNorify(self, count):
+		if count <= 0:
+			return
+		try:
+			import pynotify
+			pynotify.init("gfly_notify")
+			if count == 1:
+				n = pynotify.Notification("gfly", "There is one error")
+			else:
+				n = pynotify.Notification("gfly", "There are %d error" % count)
+			n.show()
+		except ImportError:
+			pass
 	def __move_cursor(self, textview, *args):
 		global errorGenerator
 		doc = textview.get_buffer()
