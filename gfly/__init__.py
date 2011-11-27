@@ -40,7 +40,7 @@ errorGenerator = {
 jump_to_error_key = "<Control>1"
 
 # notification
-notification = True
+notification = False
 
 ui_str = """<ui>
 	<menubar name="MenuBar">
