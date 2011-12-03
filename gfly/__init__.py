@@ -1,8 +1,8 @@
 #-*- coding:utf-8 -*-
+import string
 import gtk
 import pango
 import gedit
-
 from settings import errorGenerator, jump_to_error_key, notification
 
 ui_str = """<ui>
@@ -25,7 +25,6 @@ def getLineStartToEnd(doc, line):
 	e = s.copy()
 	e.forward_line()
 	return s, e
-import string
 def skipWhiteSpaces(itr):
 	""" skip white spaces of gtk.TextIter
 	"""
