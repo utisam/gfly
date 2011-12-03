@@ -87,8 +87,8 @@ gedit用flymake的な何か「gfly」
 		「なんとかErrorGenerator.py」を追加してください
 		add "---ErrorGenerator.py"
 		
-		「__init__.py」の「errorGenerator」にインスタンスを追加するとたぶんうまくいきます
-		add that instance to "errorGenerator" of "__init__.py", and maybe success
+		「settings.py」の「errorGenerator」にインスタンスを追加するとたぶんうまくいきます
+		add that instance to "errorGenerator" of "settings.py", and maybe success
 	
 	書いた人(Author)
 		Masatoshi Tsushima

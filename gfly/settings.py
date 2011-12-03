@@ -33,7 +33,7 @@ errorGenerator = {
 	"Perl": [PerlErrorGenerator()],
 	"PHP": [PhpErrorGenerator()],
 	"Ruby": [RubyErrorGenerator()],
-	"sh": [ShErrorGenerator()],#[BashErrorGenerator()]
+	"sh": [ShErrorGenerator()],#[BashErrorGenerator()],
 	"LaTeX": [LatexErrorGenerator()],
 }
 
