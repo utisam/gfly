@@ -1,5 +1,4 @@
 #-*- coding:utf-8 -*-
-import threading
 import gtk
 import pango
 import gedit
@@ -92,13 +91,13 @@ class TabWatch:
 		for i in self.tabConnected:
 			self.geditWindow.disconnect(i)
 		if not self.currentDocConnected is None:
-			self.geditWindow.disconnect(currentDocConnected)
+			self.geditWindow.disconnect(self.currentDocConnected)
 #	def __tab_added(self, window, tab):
 #		pass
 	def __tab_changed(self, window, tab):
 		#connect document signal
 		if not self.currentDocConnected is None:
-			window.disconnect(currentDocConnected)
+			window.disconnect(self.currentDocConnected)
 		doc = window.get_active_document()
 		doc.connect("saved", self.__doc_saved)
 		#connect view signal
@@ -126,7 +125,7 @@ class TabWatch:
 						s, e = getLineStartToEnd(doc, i - 1)
 						doc.apply_tag(self.errorTag, skipWhiteSpaces(s), e)
 						errorCount += 1
-				except Error:
+				except EnvironmentError:
 					print "cannot generateErrorLines"
 			if notification:
 				self.errorNorify(errorCount)

@@ -17,5 +17,5 @@ class PyflakesErrorGenerator(ErrorGenerator):
 	parseRegex = "^:([0-9]*): (.*)"
 	lineIndex = 1
 	messageIndex = 2
-	stdout = None
+	stdout = subprocess.PIPE
 	stderr = subprocess.PIPE
