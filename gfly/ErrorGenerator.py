@@ -2,7 +2,6 @@
 import re
 import subprocess
 
-
 class ErrorGenerator:
 	""" abstract ErrorGenerator
 	you must define:
@@ -13,8 +12,7 @@ class ErrorGenerator:
 	def generateErrorLines(self, filepath):
 		"""generate error lines
 		"""
-		self.command.append(filepath)
-		ps = subprocess.Popen(self.command, stdout=self.stdout, stderr=self.stderr)
+		ps = subprocess.Popen(self.command + [filepath], stdout=self.stdout, stderr=self.stderr)
 		self.errorLineMsg.clear()
 		if self.startFilePath:
 			length = len(filepath)
