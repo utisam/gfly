@@ -65,8 +65,9 @@ def getLineStartToEnd(doc, line):
 	return s, e
 import string
 def skipWhiteSpaces(itr):
-	if not itr.get_char() in string.whitespace: return itr
-	while not itr.starts_word() and itr.forward_char():
+	""" skip white spaces of gtk.TextIter
+	"""
+	while itr.get_char() in string.whitespace and itr.forward_char():
 		pass
 	return itr
 def getLanguageName(doc):
