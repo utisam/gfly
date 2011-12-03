@@ -63,7 +63,9 @@ def getLineStartToEnd(doc, line):
 	e = s.copy()
 	e.forward_line()
 	return s, e
+import string
 def skipWhiteSpaces(itr):
+	if not itr.get_char() in string.whitespace: return itr
 	while not itr.starts_word() and itr.forward_char():
 		pass
 	return itr
@@ -89,6 +91,7 @@ class TabWatch:
 	def __del__(self):
 		#disconnect signal
 		for i in self.tabConnected:
+			if i is None: continue
 			self.geditWindow.disconnect(i)
 		if not self.currentDocConnected is None:
 			self.geditWindow.disconnect(self.currentDocConnected)
