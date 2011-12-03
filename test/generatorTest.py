@@ -7,7 +7,7 @@ from nose.tools import *
 
 # LANG=ja_JP.UTF-8
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(os.path.join(BASE_DIR, '../gfly'))
+sys.path.append(os.path.join(BASE_DIR, '../gfly/generators'))
 
 
 def TestCErrorGenerator():

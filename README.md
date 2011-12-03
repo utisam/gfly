@@ -71,6 +71,11 @@ gedit用flymake的な何か「gfly」
 		LaTeXでの利用にはlacheckが必要です
 		you need "lacheck" for LaTeX
 		
+		noseを利用すると，現在利用可能なエラージェネレータがわかります
+		you can know available error generators by "nose"
+		
+			$ nosetests generatorTest.py
+		
 	キーバインディングを変更したい(You want to change key binding)
 		__init__.pyを編集
 		edit __init__.py

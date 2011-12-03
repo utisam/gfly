@@ -3,19 +3,19 @@ import gtk
 import pango
 import gedit
 
-from CErrorGenerator import CErrorGenerator
-from CppErrorGenerator import CppErrorGenerator
-from CsharpErrorGenerator import CsharpErrorGenerator
-from DErrorGenerator import DErrorGenerator
-from JavaErrorGenerator import JavaErrorGenerator
-from JavascriptErrorGenerator import ClosureLinterErrorGenerator
-#from PythonErrorGenerator import PylintErrorGenerator
-from PythonErrorGenerator import PyflakesErrorGenerator
-from PerlErrorGenerator import PerlErrorGenerator
-from PhpErrorGenerator import PhpErrorGenerator
-from RubyErrorGenerator import RubyErrorGenerator
-from ShErrorGenerator import ShErrorGenerator
-from LatexErrorGenerator import LatexErrorGenerator
+from generators.CErrorGenerator import CErrorGenerator
+from generators.CppErrorGenerator import CppErrorGenerator
+from generators.CsharpErrorGenerator import CsharpErrorGenerator
+from generators.DErrorGenerator import DErrorGenerator
+from generators.JavaErrorGenerator import JavaErrorGenerator
+from generators.JavascriptErrorGenerator import ClosureLinterErrorGenerator
+#from generators.PythonErrorGenerator import PylintErrorGenerator
+from generators.PythonErrorGenerator import PyflakesErrorGenerator
+from generators.PerlErrorGenerator import PerlErrorGenerator
+from generators.PhpErrorGenerator import PhpErrorGenerator
+from generators.RubyErrorGenerator import RubyErrorGenerator
+from generators.ShErrorGenerator import ShErrorGenerator
+from generators.LatexErrorGenerator import LatexErrorGenerator
 """ when you want to add error generator, use under map, and add instance.
 ErrorGenerator needs "errorLineMsg(Map)" and "def generateErrorLines(self, doc):"
 key: language name using gedit
