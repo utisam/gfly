@@ -3,45 +3,7 @@ import gtk
 import pango
 import gedit
 
-from generators.CErrorGenerator import CErrorGenerator
-from generators.CppErrorGenerator import CppErrorGenerator
-from generators.CsharpErrorGenerator import CsharpErrorGenerator
-from generators.DErrorGenerator import DErrorGenerator
-from generators.JavaErrorGenerator import JavaErrorGenerator
-from generators.JavascriptErrorGenerator import ClosureLinterErrorGenerator
-#from generators.PythonErrorGenerator import PylintErrorGenerator
-from generators.PythonErrorGenerator import PyflakesErrorGenerator
-from generators.PerlErrorGenerator import PerlErrorGenerator
-from generators.PhpErrorGenerator import PhpErrorGenerator
-from generators.RubyErrorGenerator import RubyErrorGenerator
-from generators.ShErrorGenerator import ShErrorGenerator
-from generators.LatexErrorGenerator import LatexErrorGenerator
-""" when you want to add error generator, use under map, and add instance.
-ErrorGenerator needs "errorLineMsg(Map)" and "def generateErrorLines(self, doc):"
-key: language name using gedit
-value: list of generator
-"""
-errorGenerator = {
-	"C": [CErrorGenerator()],
-	"C++": [CppErrorGenerator()],
-	"C/C++/ObjC Header": [CppErrorGenerator()],
-	"C#": [CsharpErrorGenerator()],
-	"D": [DErrorGenerator()],
-	"Java": [JavaErrorGenerator()],
-	"Javascript": [ClosureLinterErrorGenerator()],
-	"Python": [PyflakesErrorGenerator()],#[PylintErrorGenerator()],
-	"Perl": [PerlErrorGenerator()],
-	"PHP": [PhpErrorGenerator()],
-	"Ruby": [RubyErrorGenerator()],
-	"sh": [ShErrorGenerator()],
-	"LaTeX": [LatexErrorGenerator()],
-}
-
-# key binding
-jump_to_error_key = "<Control>1"
-
-# notification
-notification = False
+from settings import errorGenerator, jump_to_error_key, notification
 
 ui_str = """<ui>
 	<menubar name="MenuBar">
@@ -80,31 +42,37 @@ def getLanguageName(doc):
 		return lang.get_name()
 
 class TabWatch:
-	currentDocConnected = None
-	currentTabConnected = None
-	errorTag = None
 	def __init__(self, window):
+		self.errorTag = None
+		self.currentConnectedTab = None
+		self.currentConnectedDoc = None
 		self.geditWindow = window
 		#connect sindow signal
-		if not self.currentTabConnected is None:
-			self.currentTabConnected = window.connect("active_tab_changed", self.__tab_changed)
-	def __del__(self):
-		#disconnect signal
-		if not self.currentTabConnected is None:
-			self.geditWindow.disconnect(self.currentTabConnected)
-		if not self.currentDocConnected is None:
-			self.geditWindow.disconnect(self.currentDocConnected)
+		self.currentConnectedTab = window.connect("active_tab_changed", self.__tab_changed)
+	def close(self, window):
+		if not self.currentConnectedTab is None:
+			window.disconnect(self.currentConnectedTab)
+			self.currentConnectedTab = None
+		if not self.currentConnectedDoc is None:
+			window.disconnect(self.currentConnectedDoc)
+			self.currentConnectedDoc = None
 	def __tab_changed(self, window, tab):
-		#connect document signal
-		if not self.currentDocConnected is None:
-			window.disconnect(self.currentDocConnected)
 		doc = window.get_active_document()
+		#connect sindow signal
+		if not self.currentConnectedTab is None:
+			window.disconnect(self.currentConnectedTab)
+			self.currentConnectedTab = None
+		self.currentConnectedTab = window.connect("active_tab_changed", self.__tab_changed)
+		#connect document signal
+		if not self.currentConnectedDoc is None:
+			window.disconnect(self.currentConnectedDoc)
+			self.currentConnectedDoc = None
 		doc.connect("saved", self.__doc_saved)
 		#connect view signal
 		tab.get_view().connect_after("move-cursor", self.__move_cursor)
 		#create tag for error
 		self.errorTag = doc.get_tag_table().lookup('errorTag')
-		if self.errorTag == None:
+		if self.errorTag is None:
 			self.errorTag = doc.create_tag('errorTag', underline=pango.UNDERLINE_ERROR)
 		self.draw_lines(doc)
 	def __doc_saved(self, doc, *args):
@@ -183,7 +151,7 @@ class gfly(gedit.Plugin):
 		manager.insert_action_group(self.action_group, -1)
 		self.ui_id = manager.add_ui_from_string(ui_str)
 	def deactivate(self, window):
-		pass
+		self.tabwatch.close(window)
 	def update_ui(self, window):
 		pass
 	def __jump_error(self, action):
