@@ -46,6 +46,15 @@ def TestCsharpErrorGenerator():
 	eq_(gen.errorLineMsg[lines[1]], 'error CS8025: Parsing error')
 
 
+def TestDErrorGenerator():
+	from DErrorGenerator import DErrorGenerator
+	gen = DErrorGenerator()
+	lines = [x for x in gen.generateErrorLines(os.path.join(BASE_DIR, 'mocksrc.d'))]
+	eq_(len(lines), 1)
+	eq_(lines[0], 4)
+	eq_(gen.errorLineMsg[lines[0]], "found 'return' when expecting ';' following 'statement'")
+
+
 def TestJavaErrorGenerator():
 	from JavaErrorGenerator import JavaErrorGenerator
 	gen = JavaErrorGenerator()
