@@ -81,23 +81,19 @@ def getLanguageName(doc):
 
 class TabWatch:
 	currentDocConnected = None
+	currentTabConnected = None
 	errorTag = None
 	def __init__(self, window):
 		self.geditWindow = window
 		#connect sindow signal
-		self.tabConnected = []
-#		self.tabConnected.append(self.geditWindow.connect("tab_added", self.__tab_added))
-		self.tabConnected.append(window.connect("active_tab_changed", self.__tab_changed))
-#		self.tabConnected.append(self.geditWindow.connect("tab_removed", self.__tab_removed))
+		if not self.currentTabConnected is None:
+			self.currentTabConnected = window.connect("active_tab_changed", self.__tab_changed)
 	def __del__(self):
 		#disconnect signal
-		for i in self.tabConnected:
-			if i is None: continue
-			self.geditWindow.disconnect(i)
+		if not self.currentTabConnected is None:
+			self.geditWindow.disconnect(self.currentTabConnected)
 		if not self.currentDocConnected is None:
 			self.geditWindow.disconnect(self.currentDocConnected)
-#	def __tab_added(self, window, tab):
-#		pass
 	def __tab_changed(self, window, tab):
 		#connect document signal
 		if not self.currentDocConnected is None:
@@ -111,8 +107,6 @@ class TabWatch:
 		if self.errorTag == None:
 			self.errorTag = doc.create_tag('errorTag', underline=pango.UNDERLINE_ERROR)
 		self.draw_lines(doc)
-#	def __tab_removed(self, window, tab):
-#		pass
 	def __doc_saved(self, doc, *args):
 		self.draw_lines(doc)
 	def draw_lines(self, doc):
