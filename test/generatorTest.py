@@ -10,14 +10,21 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(BASE_DIR, '../gfly/generators'))
 
 
-def TestCErrorGenerator():
-	from CErrorGenerator import CErrorGenerator
-	gen = CErrorGenerator()
+def TestGccErrorGenerator():
+	from CErrorGenerator import GccErrorGenerator
+	gen = GccErrorGenerator()
 	lines = [x for x in gen.generateErrorLines(os.path.join(BASE_DIR, 'mocksrc.c'))]
 	eq_(len(lines), 1)
 	eq_(lines[0], 4)
 	eq_(gen.errorLineMsg[lines[0]], "error: expected ‘;’ before ‘return’")
 
+def TestClangErrorGenerator():
+	from CErrorGenerator import ClangErrorGenerator
+	gen = ClangErrorGenerator()
+	lines = [x for x in gen.generateErrorLines(os.path.join(BASE_DIR, 'mocksrc.c'))]
+	eq_(len(lines), 1)
+	eq_(lines[0], 3)
+	eq_(gen.errorLineMsg[lines[0]], "error: expected ';' after expression")
 
 def TestCppErrorGenerator():
 	from CppErrorGenerator import CppErrorGenerator
