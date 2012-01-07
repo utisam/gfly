@@ -1,8 +1,7 @@
-#-*- coding:utf-8 -*-
+	#-*- coding:utf-8 -*-
 import string
-import gtk
 import pango
-import gedit
+from gi.repository import GObject, Gedit, Gtk
 from settings import errorGenerator, jump_to_error_key, notification
 
 ui_str = """<ui>
@@ -17,7 +16,7 @@ ui_str = """<ui>
 """
 
 def getLineStartToEnd(doc, line):
-	""" get two gtk.TextIter, start and end of line
+	""" get two Gtk.TextIter, start and end of line
 	Attribute:
 		line: integer of line number(start 0)
 	"""
@@ -26,7 +25,7 @@ def getLineStartToEnd(doc, line):
 	e.forward_line()
 	return s, e
 def skipWhiteSpaces(itr):
-	""" skip white spaces of gtk.TextIter
+	""" skip white spaces of Gtk.TextIter
 	"""
 	while itr.get_char() in string.whitespace and itr.forward_char():
 		pass
@@ -138,20 +137,22 @@ class TabWatch:
 				doc.goto_line(lines[0] - 1)
 				view.scroll_to_cursor()
 
-class gfly(gedit.Plugin):
+class gfly(GObject.Object, Gedit.WindowActivatable):
+	__gtype_name__ = "gfly"
+	window = GObject.property(type=Gedit.Window)
 	def __init__(self):
-		gedit.Plugin.__init__(self)
-	def activate(self, window):
+		GObject.Object.__init__(self)
+	def do_activate(self):
 		global ui_str
-		self.tabwatch = TabWatch(window)
-		manager = window.get_ui_manager()
-		self.action_group = gtk.ActionGroup("gflyPluginAction")
+		self.tabwatch = TabWatch(self.window)
+		manager = self.window.get_ui_manager()
+		self.action_group = Gtk.ActionGroup("gflyPluginAction")
 		self.action_group.add_actions([("gfly", None, "Jump Error", jump_to_error_key, None, self.__jump_error)])
 		manager.insert_action_group(self.action_group, -1)
 		self.ui_id = manager.add_ui_from_string(ui_str)
-	def deactivate(self, window):
-		self.tabwatch.close(window)
-	def update_ui(self, window):
+	def do_deactivate(self):
+		self.tabwatch.close(self.window)
+	def do_update_state(self):
 		pass
 	def __jump_error(self, action):
 		self.tabwatch.jump_error()

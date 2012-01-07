@@ -3,7 +3,7 @@
 
 import sys
 import os
-from nose.tools import *
+from nose.tools import eq_
 
 # LANG=ja_JP.UTF-8
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -14,14 +14,16 @@ def TestGccErrorGenerator():
 	from CErrorGenerator import GccErrorGenerator
 	gen = GccErrorGenerator()
 	lines = [x for x in gen.generateErrorLines(os.path.join(BASE_DIR, 'mocksrc.c'))]
+	# gcc version 4.6.1 (Ubuntu/Linaro 4.6.1-9ubuntu3)
 	eq_(len(lines), 1)
 	eq_(lines[0], 4)
-	eq_(gen.errorLineMsg[lines[0]], "error: expected ‘;’ before ‘return’")
+	eq_(gen.errorLineMsg[lines[0]], "2: error: expected ‘;’ before ‘return’")
 
 def TestClangErrorGenerator():
 	from CErrorGenerator import ClangErrorGenerator
 	gen = ClangErrorGenerator()
 	lines = [x for x in gen.generateErrorLines(os.path.join(BASE_DIR, 'mocksrc.c'))]
+	# clang version 2.9 (tags/RELEASE_29/final)
 	eq_(len(lines), 1)
 	eq_(lines[0], 3)
 	eq_(gen.errorLineMsg[lines[0]], "error: expected ';' after expression")
@@ -30,29 +32,30 @@ def TestCppErrorGenerator():
 	from CppErrorGenerator import CppErrorGenerator
 	gen = CppErrorGenerator()
 	lines = [x for x in gen.generateErrorLines(os.path.join(BASE_DIR, 'mocksrc.cpp'))]
+	# gcc version 4.6.1 (Ubuntu/Linaro 4.6.1-9ubuntu3)
 	eq_(len(lines), 1)
 	eq_(lines[0], 4)
-	eq_(gen.errorLineMsg[lines[0]], "error: ‘cout’ was not declared in this scope")
+	eq_(gen.errorLineMsg[lines[0]], "2: error: ‘cout’ was not declared in this scope")
 
 
 def TestCsharpErrorGenerator():
 	from CsharpErrorGenerator import CsharpErrorGenerator
 	gen = CsharpErrorGenerator()
 	lines = [x for x in gen.generateErrorLines(os.path.join(BASE_DIR, 'mocksrc.cs'))]
-	eq_(len(lines), 2)
+	# Mono C# compiler version 2.10.5.0
+	eq_(len(lines), 1)
 	eq_(lines[0], 6)
-	eq_(gen.errorLineMsg[lines[0]], "error CS1525: Unexpected symbol `}'")
-	eq_(lines[1], 8)
-	eq_(gen.errorLineMsg[lines[1]], 'error CS8025: Parsing error')
+	eq_(gen.errorLineMsg[lines[0]], "error CS1525: Unexpected symbol `}', expecting `;'")
 
 
 def TestDErrorGenerator():
 	from DErrorGenerator import DErrorGenerator
 	gen = DErrorGenerator()
 	lines = [x for x in gen.generateErrorLines(os.path.join(BASE_DIR, 'mocksrc.d'))]
+	# gcc version 4.4.6 (Ubuntu/Linaro 4.4.6-7)
 	eq_(len(lines), 1)
 	eq_(lines[0], 4)
-	eq_(gen.errorLineMsg[lines[0]], "found 'return' when expecting ';' following 'statement'")
+	eq_(gen.errorLineMsg[lines[0]], "found 'return' when expecting ';' following statement")
 
 
 def TestJavaErrorGenerator():
@@ -133,9 +136,10 @@ def TestBashErrorGenerator():
 	from ShErrorGenerator import BashErrorGenerator
 	gen = BashErrorGenerator()
 	lines = [x for x in gen.generateErrorLines(os.path.join(BASE_DIR, 'mocksrc.sh'))]
+	# GNU bash, version 4.2.10(1)-release (x86_64-pc-linux-gnu)
 	eq_(len(lines), 1)
 	eq_(lines[0], 4)
-	eq_(gen.errorLineMsg[lines[0]], "期待してない token `fi' のあたりにシンタックスエラー")
+	eq_(gen.errorLineMsg[lines[0]], "syntax error near unexpected token `fi'")
 
 def TestLatexErrorGenerator():
 	from LatexErrorGenerator import LatexErrorGenerator

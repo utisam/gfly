@@ -28,7 +28,7 @@ errorGenerator = {
 	"C#": [CsharpErrorGenerator()],
 	"D": [DErrorGenerator()],
 	"Java": [JavaErrorGenerator()],
-	"Javascript": [ClosureLinterErrorGenerator()],
+	"JavaScript": [ClosureLinterErrorGenerator()],
 	"Python": [PyflakesErrorGenerator()],#[PylintErrorGenerator()],
 	"Perl": [PerlErrorGenerator()],
 	"PHP": [PhpErrorGenerator()],
