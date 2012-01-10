@@ -1,7 +1,7 @@
-[Plugin]
+[Gedit Plugin]
 Loader=python
 Module=gfly
-IAge=3
+IAge=2
 Name=gfly
 Name[ja]=gfly
 Description=something like flymake for gedit
