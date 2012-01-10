@@ -1,7 +1,6 @@
 	#-*- coding:utf-8 -*-
 import string
-import pango
-from gi.repository import GObject, Gedit, Gtk
+from gi.repository import GObject, Gedit, Gtk, Pango
 from settings import errorGenerator, jump_to_error_key, notification
 
 ui_str = """<ui>
@@ -71,7 +70,7 @@ class TabWatch:
 		#create tag for error
 		self.errorTag = doc.get_tag_table().lookup('errorTag')
 		if self.errorTag is None:
-			self.errorTag = doc.create_tag('errorTag', underline=pango.UNDERLINE_ERROR)
+			self.errorTag = doc.create_tag('errorTag', underline=Pango.Underline.ERROR)
 		self.draw_lines(doc)
 	def __doc_saved(self, doc, *args):
 		self.draw_lines(doc)

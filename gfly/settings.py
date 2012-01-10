@@ -38,7 +38,7 @@ errorGenerator = {
 }
 
 # key binding
-jump_to_error_key = "<Control>1"
+jump_to_error_key = "<Control>r"
 
 # notification
 notification = False
