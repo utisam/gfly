@@ -15,6 +15,7 @@ from generators.PhpErrorGenerator import PhpErrorGenerator
 from generators.RubyErrorGenerator import RubyErrorGenerator
 from generators.ShErrorGenerator import ShErrorGenerator
 #from generators.ShErrorGenerator import BashErrorGenerator
+from generators.TextErrorGenerator import TextErrorGenerator
 from generators.LatexErrorGenerator import LatexErrorGenerator
 """ when you want to add error generator, use under map, and add instance.
 ErrorGenerator needs "errorLineMsg(Map)" and "def generateErrorLines(self, doc):"
@@ -35,6 +36,7 @@ errorGenerator = {
 	"Ruby": [RubyErrorGenerator()],
 	"sh": [ShErrorGenerator()],#[BashErrorGenerator()],
 	"LaTeX": [LatexErrorGenerator()],
+	None: [TextErrorGenerator()],
 }
 
 # key binding

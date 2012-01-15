@@ -1,0 +1,5 @@
+# textassert: です．
+ほげほげです．
+# textassert.regex: 。
+ぽうぽうである。
+# textassert.regex: [*

@@ -141,6 +141,15 @@ def TestBashErrorGenerator():
 	eq_(lines[0], 4)
 	eq_(gen.errorLineMsg[lines[0]], "syntax error near unexpected token `fi'")
 
+def TestTextErrorGenerator():
+	from TextErrorGenerator import TextErrorGenerator
+	gen = TextErrorGenerator()
+	lines = [x for x in gen.generateErrorLines(os.path.join(BASE_DIR, 'mocksrc.txt'))]
+	eq_(tuple(lines), (2, 4, 5))
+	eq_(gen.errorLineMsg[lines[0]], "hit!")
+	eq_(gen.errorLineMsg[lines[1]], "hit!")
+	eq_(gen.errorLineMsg[lines[2]], "unexpected end of regular expression")
+
 def TestLatexErrorGenerator():
 	from LatexErrorGenerator import LatexErrorGenerator
 	gen = LatexErrorGenerator()
