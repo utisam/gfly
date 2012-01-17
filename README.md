@@ -1,18 +1,20 @@
 gedit用flymake的な何か「gfly」
 	-- something like flymake for gedit "gfly" --
+	for gedit 3
 
 ![Screenshot](http://github.com/utisam/gfly/blob/master/Screenshot.png?raw=true "Screenshot")
 
 	使い方(How to use)
 		gfl.gedit-pluginとgflyフォルダを~/.gnome2/gedit/pluginsにコピー
-		copy "gfly.gedit-plugin" and "gfly/" to ~/gnome2/gedit/plugins
+		copy "gfly.gedit-plugin" and "gfly/" to ~/.local/share/gedit/plugins/
 		
 			~(home)/
-				.gnome2/
-					gedit/
-						plugins/
-							gfly.gedit-plugin
-							gfly/
+				.local/
+					share/
+						gedit/
+							plugins/
+								gfly.gedit-plugin
+								gfly/
 		
 		編集→設定→プラグインでgflyを有効にする
 		"edit"->"Preference"->"Plugins" and check "gfly"
@@ -34,9 +36,6 @@ gedit用flymake的な何か「gfly」
 		
 		カーソルをエラーに合わせるとtooltipが出ます
 		appear tooltip when you put cursor on error
-		
-		Ctrl + 1 でエラーのある行にジャンプします
-		jump to error line when you type Ctrl + 1
 		
 	注意(Notes)
 		C言語での利用にはgccが必要です
