@@ -3,3 +3,6 @@
 # textassert.regex: 。
 ぽうぽうである。
 # textassert.regex: [*
+# textassert: だ．,である．
+くぁｗせｄｒｆｔｇｙふじこｌｐ；＠：」
+

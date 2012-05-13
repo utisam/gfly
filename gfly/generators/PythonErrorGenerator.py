@@ -5,7 +5,7 @@ from ErrorGenerator import ErrorGenerator
 class PylintErrorGenerator(ErrorGenerator):
 	command = ["pylint", "-E"]
 	startFilePath = False
-	parseRegex = "^E: *([0-9]*): (.*)"
+	parseRegex = "^E: *([0-9]+),[0-9]*: (.*)"
 	lineIndex = 1
 	messageIndex = 2
 	stdout = subprocess.PIPE

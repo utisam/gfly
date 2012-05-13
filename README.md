@@ -5,15 +5,15 @@ gedit用flymake的な何か「gfly」
 ![Screenshot](http://github.com/utisam/gfly/blob/master/Screenshot.png?raw=true "Screenshot")
 
 	使い方(How to use)
-		gfl.gedit-pluginとgflyフォルダを~/.gnome2/gedit/pluginsにコピー
-		copy "gfly.gedit-plugin" and "gfly/" to ~/.local/share/gedit/plugins/
+		gfly.pluginとgflyフォルダを~/.gnome2/gedit/pluginsにコピー
+		copy "gfly.plugin" and "gfly/" to ~/.local/share/gedit/plugins/
 		
 			~(home)/
 				.local/
 					share/
 						gedit/
 							plugins/
-								gfly.gedit-plugin
+								gfly.plugin
 								gfly/
 		
 		編集→設定→プラグインでgflyを有効にする
